@@ -18,7 +18,7 @@ com integração de APIs REST (OpenWeatherMap) e foco em usabilidade, design res
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/seu-usuario/weather-dashboard.git
+   git clone https://github.com/erycastro/weather-dashboard.git
    ```
 2. Navegue até o diretório e abra o `index.html` em seu navegador de preferência.
 
