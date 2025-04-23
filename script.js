@@ -1,5 +1,7 @@
 let weather = {
     "units": "metric",
+    "metrics": "°C",
+    "km_or_miles": "km/h",
     "apiKey": "850016e01e031e5af2a3fab9416144e8",
     fetchWeather: function (city) {
         fetch(
@@ -22,13 +24,23 @@ let weather = {
         document.querySelector(".icon").src =
             "https://openweathermap.org/img/wn/" + icon + ".png";
         document.querySelector(".description").innerText = description;
-        document.querySelector(".temperature").innerText = Math.round(temp) + "°C";
+        document.querySelector(".temperature").innerText = Math.round(temp) + this.metrics;
         document.querySelector(".humidity").innerText = "Humidity: " + humidity + "%";
-        document.querySelector(".wind").innerText = "Wind speed: " + Math.round(speed) + " km/h";
+        document.querySelector(".wind").innerText = "Wind speed: " + Math.round(speed) + this.km_or_miles;
         document.querySelector(".weather").classList.remove("loading");
     },
     search: function () {
-        this.fetchWeather(document.querySelector(".search-bar").value);
+        let city = document.querySelector(".search-bar").value;
+        if (!city) {
+            const locationText = document.querySelector(".location").innerText;
+            // Extrai o nome da cidade de "Weather in CITY"
+        if (locationText.startsWith("Weather in ")) {
+            city = locationText.replace("Weather in ", "");
+        }
+    }
+    if (city) {
+        this.fetchWeather(city);
+    }
     },
     updateBackground:function (main) {
         const body = document.body;
@@ -46,7 +58,15 @@ let weather = {
     switchMetric:function () {
         if (this.units === "metric") {
             this.units = "imperial";
+            this.metrics = "°F";
+            this.km_or_miles = "mph";
             document.querySelector(".metric").innerText = "°F";
+        }
+        else {
+            this.units = "metric";
+            this.metrics = "°C";
+            this.km_or_miles = "km/h";
+            document.querySelector(".metric").innerText = "°C";
         }
     }
 
@@ -59,9 +79,10 @@ document
 });
 
 document
-    .querySelector("metric")
+    .querySelector(".metric")
     .addEventListener("click", function(){
     weather.switchMetric();
+    weather.search();
     })
 
 document.querySelector(".search-bar").addEventListener("keyup", function (event) {
