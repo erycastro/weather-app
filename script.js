@@ -1,8 +1,9 @@
+const apiKey = process.env.API_KEY;
 let weather = {
     "units": "metric",
     "metrics": "°C",
     "km_or_miles": "km/h",
-    "apiKey": "850016e01e031e5af2a3fab9416144e8",
+    "apiKey" : apiKey,
     fetchWeather: function (city) {
         fetch(
             "https://api.openweathermap.org/data/2.5/weather?q="
@@ -30,17 +31,7 @@ let weather = {
         document.querySelector(".weather").classList.remove("loading");
     },
     search: function () {
-        let city = document.querySelector(".search-bar").value;
-        if (!city) {
-            const locationText = document.querySelector(".location").innerText;
-            // Extrai o nome da cidade de "Weather in CITY"
-        if (locationText.startsWith("Weather in ")) {
-            city = locationText.replace("Weather in ", "");
-        }
-    }
-    if (city) {
-        this.fetchWeather(city);
-    }
+        this.fetchWeather(document.querySelector(".search-bar").value);
     },
     updateBackground:function (main) {
         const body = document.body;
@@ -67,8 +58,19 @@ let weather = {
             this.metrics = "°C";
             this.km_or_miles = "km/h";
             document.querySelector(".metric").innerText = "°C";
+        } 
+        let city = document.querySelector(".search-bar").value;
+        if (!city) {
+            const locationText = document.querySelector(".location").innerText;
+            if (locationText.startsWith("Weather in ")) {
+                city = locationText.replace("Weather in ", "");
+            }
         }
-    }
+        if (city) {
+            this.fetchWeather(city);
+        }
+    },
+    
 
 };
 
