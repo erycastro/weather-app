@@ -42,6 +42,12 @@ let weather = {
             Haze: "url('images/mist.jpg')",
         };
         body.style.backgroundImage = backgrounds[main] || "url('images/clear.jpg')";
+    },
+    switchMetric:function () {
+        if (this.units === "metric") {
+            this.units = "imperial";
+            document.querySelector(".metric").innerText = "°F";
+        }
     }
 
 };
@@ -51,6 +57,12 @@ document
     .addEventListener("click", function (){
     weather.search();
 });
+
+document
+    .querySelector("metric")
+    .addEventListener("click", function(){
+    weather.switchMetric();
+    })
 
 document.querySelector(".search-bar").addEventListener("keyup", function (event) {
     if (event.key == "Enter") {
