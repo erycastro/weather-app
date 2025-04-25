@@ -1,9 +1,8 @@
-const apiKey = process.env.API_KEY;
 let weather = {
     "units": "metric",
     "metrics": "°C",
     "km_or_miles": "km/h",
-    "apiKey" : apiKey,
+    "apiKey": "850016e01e031e5af2a3fab9416144e8",
     fetchWeather: function (city) {
         fetch(
             "https://api.openweathermap.org/data/2.5/weather?q="
@@ -43,6 +42,7 @@ let weather = {
             Snow: "url('images/snow.jpg')",
             Mist: "url('images/mist.jpg')",
             Haze: "url('images/mist.jpg')",
+            Fog: "url('images/mist.jpg')",
         };
         body.style.backgroundImage = backgrounds[main] || "url('images/clear.jpg')";
     },
